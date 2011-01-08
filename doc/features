@@ -1,0 +1,5 @@
+The TestSuite is composed of TestCases.
+The TestCase can run standalone.
+
+The TestSuite gathers the result of The TestCases in it and show it in some manner.
+The TestCase holds the result by itself.
