@@ -8,6 +8,7 @@ var unit = {};
 	var AssertException = function(message){
 		this.name = "AssertException";
 		this.message = message ? message : STR_EMPTY;
+		this.method = STR_EMPTY;
 	};
 	
 	AssertException.prototype.toString = function() {
@@ -101,5 +102,65 @@ var unit = {};
 
 	$.TestCase = TestCase;
 
-	//TODO TESTSUITE
+	var TestSuite = function(){
+		this.cs = [];
+		return this;
+	};
+
+	TestSuite.create = function(){
+		return new TestCase();
+	};
+
+	TestSuite.prototype.add = function(testcase) {
+		if(testcase) {
+			this.cs.push(testcase);
+		} else {
+			throw new Error("TestSuite can not add undefined testcases");
+		}
+		return this;
+	};
+
+	TestSuite.prototype.run = function() {
+		var error = [];
+		var tolCases = 0;
+		var successCase = 0;
+		for(var i in this.cs) {
+			var tc = this.cs[i];
+			for(var j in tc) {
+				try{
+					if(0 == j.toLowerCase().indexOf("test") && "function" == typeof tc[j]) {
+						tolCases++;
+						tc[j].call(tc);
+						successCase++;
+					} 
+				} catch (e) {
+					e.method = j;
+					error.push(e);
+				}
+			}	
+		}
+		this.render(error,tolCases,successCase);
+	};
+
+	var render = function(errors,total,success){
+		var str = "Total cases:#t#,Success cases:<font size='4' color='green'>#s#</font>,Failure cases:<font size='4' color='red'>#f#</font><br/>#c#";
+		if(0 == errors.length) {
+			document.body.innerHTML = str.replace(/#t#/,total).replace(/#s#/,success).replace(/#f#/,(total-success)).replace(/#c#/,STR_EMPTY);
+			return;
+ 		}
+		var content = "<ul>";
+		var space = "=>"
+		for(var i in errors) {
+			content += "<li>" + errors[i].name +space +errors[i].method +space +errors[i].message +"</li>"; 
+		}
+		content += "</ul>";
+		document.body.innerHTML = str.replace(/#t#/,total).replace(/#s#/,success).replace(/#f#/,(total-success)).replace(/#c#/,content);
+	};
+	
+	if(window.renderTest) {
+		render = window.renderTest;
+	}
+	TestSuite.prototype.render = render;
+
+	$.TestSuite = TestSuite;
 })(unit);

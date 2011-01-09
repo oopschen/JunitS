@@ -1,0 +1,16 @@
+<html>
+	<head>
+		<title>This is a test for testsuite</title>
+	</head>
+	<body></body>
+
+	<script type="text/javascript" src="../main/unitjs.js"></script>
+	<script type="text/javascript">
+		var testcase = unit.TestSuite.create();
+		testcase.testInt = function(){
+			this.assertEqual("fail to test 1 == 1 ",1,1);
+		};
+
+		new unit.TestSuite().add(testcase).run();
+	</script>
+</html>
