@@ -63,7 +63,37 @@
 			alert(e);
 		}
 
-		alert( 7 == testCount ? "all tests success" : "test fail");
+		//test assertUndefined the same as undefined === actual
+		try{
+			testcase.assertUndefined("fail to test assertUndefined",undefined);
+			testcase.assertUndefined(undefined);
+			testCount++;
+		} catch (e) {
+			alert(e);
+		}
+		try{
+			testcase.assertUndefined("success to test assertUndefined failure",true);
+		} catch (e) {
+			testCount++;
+			alert(e);
+		}
+
+		//test assertNull the same as null === actual
+		try{
+			testcase.assertNull("fail to test assertNull",null);
+			testcase.assertNull(null);
+			testCount++;
+		} catch (e) {
+			alert(e);
+		}
+		try{
+			testcase.assertNull("success to test assertNull failure",true);
+		} catch (e) {
+			testCount++;
+			alert(e);
+		}
+
+		alert( 11 == testCount ? "all tests success" : "test fail");
 
 	</script>
 </html>

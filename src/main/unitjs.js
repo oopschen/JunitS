@@ -72,6 +72,19 @@ var unit = {};
 		paramLenCondition([3,2],toArr(arguments).concat([function(actual){ return false === actual; }]));
 	};
 
+	/**
+	* @params [message],actual
+	**/
+	TestCase.prototype.assertUndefined = function() {
+		paramLenCondition([3,2],toArr(arguments).concat([function(actual){ return undefined === actual; }]));
+	};
+
+	/**
+	* @params [message],actual
+	**/
+	TestCase.prototype.assertNull = function() {
+		paramLenCondition([3,2],toArr(arguments).concat([function(actual){ return null === actual; }]));
+	};
 	$.TestCase = TestCase;
 
 	//TODO TESTSUITE
