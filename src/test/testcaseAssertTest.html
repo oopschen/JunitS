@@ -93,7 +93,21 @@
 			alert(e);
 		}
 
-		alert( 11 == testCount ? "all tests success" : "test fail");
+		//test fail 
+		try{
+			testcase.fail("success to test fail");
+		} catch (e){
+			testCount++;
+			alert(e);
+		}
+		try{
+			testcase.fail();
+		} catch (e){
+			testCount++;
+			alert(e);
+		}
+
+		alert( 13 == testCount ? "all tests success" : "test fail");
 
 	</script>
 </html>

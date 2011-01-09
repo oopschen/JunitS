@@ -16,13 +16,17 @@ var unit = {};
 
 	var TestCase = function(){};
 
-	var assert = function(message,expected,actual,fnCompare) {
+	var assert = function() {
 		if(4 == arguments.length) {
 			if(!arguments[3](arguments[1],arguments[2])) {
 				throw new AssertException(arguments[0]);
 			}
 		} else if (3 == arguments.length) {
 			if(!arguments[2](arguments[1])) {
+				throw new AssertException(arguments[0]);
+			}
+		} else if (2 == arguments.length) {
+			if(!arguments[1](arguments[0])) {
 				throw new AssertException(arguments[0]);
 			}
 		}
@@ -85,6 +89,16 @@ var unit = {};
 	TestCase.prototype.assertNull = function() {
 		paramLenCondition([3,2],toArr(arguments).concat([function(actual){ return null === actual; }]));
 	};
+	
+	/**
+	* @params [message],actual
+	**/
+	TestCase.prototype.fail = function(message) {
+		assert(message ? message : STR_EMPTY, function(){return false;});
+	};
+
+	//TODO assertArray assertObj
+
 	$.TestCase = TestCase;
 
 	//TODO TESTSUITE
