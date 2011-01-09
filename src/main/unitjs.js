@@ -1,37 +1,71 @@
+/**
+* @author raychen.chenl
+**/
 var unit = {};
 (function($){
 	var STR_EMPTY = "";
-	var AssertException = function(){};
-	AssertException.prototype = Error.prototype;
+
+	var AssertException = function(message){
+		this.name = "AssertException";
+		this.message = message ? message : STR_EMPTY;
+	};
+	
+	AssertException.prototype.toString = function() {
+		return this.name + ":\n\t" + this. message;	
+	};
 
 	var TestCase = function(){};
 
 	var assert = function(message,expected,actual,fnCompare) {
-		if(!fnCompare(expected,actual) {
-			throw new AssertException(message ? message : STR_EMPTY);
-		}
-	};
-
-	var argLenCondition = function() {
 		if(4 == arguments.length) {
-			assert.apply(this,arguments);
+			if(!arguments[3](arguments[1],arguments[2])) {
+				throw new AssertException(arguments[0]);
+			}
 		} else if (3 == arguments.length) {
-			assert.apply(this,[STR_EMPTY].concat(toArr(arguments)));
+			if(!arguments[2](arguments[1])) {
+				throw new AssertException(arguments[0]);
+			}
 		}
 	};
 
-	var toArr = function() {
+	var argLenCondition = function(params,callbacks,args) {
+		for(var i in params) {
+			if(params[i] == args.length) {
+				callbacks[i].apply(callbacks[i],args);
+			}
+		}
+	};
+
+	var toArr = function(args) {
 		var ret = [];
-		for(var i in arguments) {
-			ret.push(arguments[i]);
+		for(var i = 0 ; i < args.length ; i++) {
+			ret.push(args[i]);
 		}
 		return ret;
 	};
 
+	var paramLenCondition = function(condition,args) {
+		argLenCondition(condition,[
+				assert,
+				function() { assert.apply(assert,[STR_EMPTY].concat(toArr(arguments)));}
+			],args);
+	};
+
+	/**
+	* @params [message],expected,actual
+	**/
 	TestCase.prototype.assertEqual = function() {
-		argLenCondition.apply(this,toArr(arguments).concat(function(expected,actual){
-			return expected == actual;
-		}));
-	};	
+		paramLenCondition([4,3],toArr(arguments).concat([function(expected,actual){ return expected == actual; }]));
+	};
+
 	
+	TestCase.prototype.assertTrue = function() {
+		paramLenCondition([3,2],toArr(arguments).concat([function(actual){ return true === actual; }]));
+	};
+
+	TestCase.prototype.assertFalse = function() {
+		paramLenCondition([3,2],toArr(arguments).concat([function(actual){ return false === actual; }]));
+	};
+
+	$.TestCase = TestCase;
 })(unit);

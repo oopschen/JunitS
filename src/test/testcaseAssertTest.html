@@ -1,0 +1,69 @@
+<html>
+	<head>
+		<title>This is a test for assertion</title>
+	</head>
+	<body></body>
+
+	<script type="text/javascript" src="../main/unitjs.js"></script>
+	<script type="text/javascript">
+		var testCount = 0;
+		var testcase = new unit.TestCase();
+		//test assertEqual the same as == 
+		try{
+			testcase.assertEqual("fail to test assertEqual int with int ",1,1);
+			testcase.assertEqual("1",1);
+			alert("AssertEqual test success!");
+			testCount++;
+		} catch (e) {
+			alert(e);
+		}	
+		
+		try{
+			testcase.assertEqual("success to test assertEqual failure",1,2);
+		} catch (e) {
+			testCount++;
+			alert(e);
+		}
+
+		//test assertTrue assertFasle the same as ===
+		try{
+			testcase.assertTrue("test assertTrue fail",true);
+			testcase.assertTrue(true);
+			testcase.assertFalse("test assertFalse fail",false);
+			testcase.assertFalse(false);
+			alert("AssertTrue and AssertFalse test success!");
+			testCount++;
+		} catch (e) {
+			alert(e);
+		}
+
+		try{
+			testcase.assertTrue("success to test assertTrue failure",false);
+		} catch (e) {
+			testCount++;
+			alert(e);
+		}
+		try{
+			testcase.assertTrue("success to test assertTrue failure",1);
+		} catch (e) {
+			testCount++;
+			alert(e);
+		}
+
+		try{
+			testcase.assertFalse("success to test assertFalse failure",true);
+		} catch (e) {
+			testCount++;
+			alert(e);
+		}
+		try{
+			testcase.assertFalse("success to test assertFalse failure",0);
+		} catch (e) {
+			testCount++;
+			alert(e);
+		}
+
+		alert( 7 == testCount ? "all tests success" : "test fail");
+
+	</script>
+</html>
