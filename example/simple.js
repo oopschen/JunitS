@@ -4,9 +4,6 @@
 *
 **/
 var simpleTestCase = function(){};
-//inherite unit.TestCase
-simpleTestCase.prototype = unit.TestCase.prototype;
-
 //define test method
 simpleTestCase.test_int = function() {
 	assertEqual("1 equals 1 fail)", 2, 1);

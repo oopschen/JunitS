@@ -1,5 +1,9 @@
 The TestSuite is composed of TestCases.
-The TestCase can run standalone.
-
 The TestSuite gathers the result of The TestCases in it and show it in some manner.
-The TestCase holds the result by itself.
+The TestCase must run methods the name of which starts with "test" in incasesensitive manner.
+
+The TestCase must not run standalone, only the TestSuite can run the TestCase.
+The TestCase must hold the result by itself,but can not show it.
+What the result should look like must depend on the implementation of TestSuite's method "report". 
+
+
