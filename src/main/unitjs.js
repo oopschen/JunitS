@@ -58,14 +58,21 @@ var unit = {};
 		paramLenCondition([4,3],toArr(arguments).concat([function(expected,actual){ return expected == actual; }]));
 	};
 
-	
+	/**
+	* @params [message],actual
+	**/
 	TestCase.prototype.assertTrue = function() {
 		paramLenCondition([3,2],toArr(arguments).concat([function(actual){ return true === actual; }]));
 	};
 
+	/**
+	* @params [message],actual
+	**/
 	TestCase.prototype.assertFalse = function() {
 		paramLenCondition([3,2],toArr(arguments).concat([function(actual){ return false === actual; }]));
 	};
 
 	$.TestCase = TestCase;
+
+	//TODO TESTSUITE
 })(unit);
