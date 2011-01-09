@@ -11,6 +11,10 @@
 			this.assertEqual("fail to test 1 == 1 ",1,1);
 		};
 
+		testcase.testTrueFail= function(){
+			this.assertTrue(false);
+		};
+
 		new unit.TestSuite().add(testcase).run();
 	</script>
 </html>
