@@ -56,11 +56,61 @@ var unit = {};
 			],args);
 	};
 
+	var isArray = function(arr){
+		if(arr) {
+			if(STR_EMPTY == String(arr)) {
+				return true;
+			}
+		}
+		return false;
+	};
+	var isArrEqual = function(arg1,arg2) {
+		if(!isArray(arg1) || !isArray(arg2) || arg1.length != arg2.length) {
+			return false;
+		}
+		for(var i=0;i<arg1.length;i++) {
+			if(!isEqual(arg1,arg2)) {
+				return false;
+			}
+		}
+		return true;
+	};
+
+	var isObject = function(obj) {
+		if(obj) {
+			if("[object Object]" == String(obj)) {
+				return true;
+			}
+		}
+		return false;
+	};
+	var isObjEqual = function(arg1,arg2) {
+		if(!isObject(arg1) || !isObject(arg2)) {
+			return false;
+		}
+		for(var i in arg1) {
+			if(!isEqual(arg1[i],arg2[i])) {
+				return false;
+			}
+		}
+		return true;
+	};
+
+	var isEqual = function(expected,actual) {
+		if(isArray(expected) && isArray(actual)) {
+			return isArrEqual(expected,actual);
+		}
+		if(isObject(expected) && isObject(actual)) {
+			return isObjEqual(expected,actual)&&isObjEqual(actual,expected);
+		}
+		return expected == actual;
+	};
+
 	/**
 	* @params [message],expected,actual
 	**/
 	TestCase.prototype.assertEqual = function() {
-		paramLenCondition([4,3],toArr(arguments).concat([function(expected,actual){ return expected == actual; }]));
+		paramLenCondition([4,3],toArr(arguments).concat([isEqual]));
 	};
 
 	/**

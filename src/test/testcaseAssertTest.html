@@ -107,7 +107,43 @@
 			alert(e);
 		}
 
-		alert( 13 == testCount ? "all tests success" : "test fail");
+		//test assertEqual apply to object : object should equal every single property recursively
+		try{
+			var obj = {"name": [1,2,{"c" : "c"}]};
+			testcase.assertEqual("fail to test assertEqual with objects",obj,obj);
+			testCount++;
+		} catch(e) {
+			alert(e);
+		}
+
+		try{
+			var obj = {"name": [1,2,{"c" : "c"}]};
+			var obj1 = {"name": [1,2,{"c" : "not equal"}]};
+			testcase.assertEqual("succeed to test assertEqual with objects failure",obj,obj1);
+		} catch(e) {
+			testCount++;
+			alert(e);
+		}
+
+		//test assertEqual apply to array: array should equal every single element in array and recursive
+		try{
+			var arr = [1,2];
+			testcase.assertEqual("fail to test assertEqual with array",arr,arr);
+			testCount++;
+		} catch(e) {
+			alert(e);
+		}
+
+		try{
+			var arr = [true,{"p":[1]}];
+			var arr1 = [true,{"p":[]}];
+			testcase.assertEqual("succeed to test assertEqual with array failure",arr,arr1);
+		} catch(e) {
+			testCount++;
+			alert(e);
+		}
+
+		alert( 17 == testCount ? "all tests success" : "test fail");
 
 	</script>
 </html>
