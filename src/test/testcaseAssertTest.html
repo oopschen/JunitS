@@ -143,7 +143,25 @@
 			alert(e);
 		}
 
-		alert( 17 == testCount ? "all tests success" : "test fail");
+		//test assertEqual apply to function: function should equal with it implementation
+		try{
+			var func = function(){};
+			var func1 = function(){};
+			testcase.assertEqual("fail to test assertEqual with func",func,func1);
+			testCount++;
+		} catch(e) {
+			alert(e);
+		}
+		try{
+			var func = function(){};
+			var func1 = function(){var a = 1;};
+			testcase.assertEqual("succeed to test assertEqual with func failure",func,func1);
+		} catch(e) {
+			testCount++;
+			alert(e);
+		}
+
+		alert( 19 == testCount ? "all tests success" : "test fail");
 
 	</script>
 </html>

@@ -57,10 +57,8 @@ var unit = {};
 	};
 
 	var isArray = function(arr){
-		if(arr) {
-			if(STR_EMPTY == String(arr)) {
-				return true;
-			}
+		if(arr && STR_EMPTY == String(arr)) {
+			return true;
 		}
 		return false;
 	};
@@ -77,10 +75,8 @@ var unit = {};
 	};
 
 	var isObject = function(obj) {
-		if(obj) {
-			if("[object Object]" == String(obj)) {
-				return true;
-			}
+		if(obj && "[object Object]" == String(obj)) {
+			return true;
 		}
 		return false;
 	};
@@ -96,12 +92,28 @@ var unit = {};
 		return true;
 	};
 
+	var isFunc = function(func){
+		if(func && 'function' == typeof func) {
+			return true;
+		}
+		return false;
+	};
+	var isFuncEqual = function(arg1,arg2) {
+		if(!isFunc(arg1) && !isFunc(arg2)) {
+			return false;
+		}
+		return String(arg1) == String(arg2);
+	};
+
 	var isEqual = function(expected,actual) {
 		if(isArray(expected) && isArray(actual)) {
 			return isArrEqual(expected,actual);
 		}
 		if(isObject(expected) && isObject(actual)) {
 			return isObjEqual(expected,actual)&&isObjEqual(actual,expected);
+		}
+		if(isFunc(expected)&&isFunc(actual)) {
+			return isFuncEqual(expected,actual);
 		}
 		return expected == actual;
 	};
@@ -207,7 +219,7 @@ var unit = {};
 		document.body.innerHTML = str.replace(/#t#/,total).replace(/#s#/,success).replace(/#f#/,(total-success)).replace(/#c#/,content);
 	};
 	
-	if(window.renderTest) {
+	if(window.renderTest && isFunc(window.renderTest)) {
 		render = window.renderTest;
 	}
 	TestSuite.prototype.render = render;
