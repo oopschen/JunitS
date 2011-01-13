@@ -172,6 +172,13 @@ var unit = {};
 	TestSuite.create = function(){
 		return new TestCase();
 	};
+	
+	TestSuite.init = function(render) {
+		if(!isFunc(render)) {
+			return ;
+		}
+		TestSuite.prototype.render = render;
+	};
 
 	TestSuite.prototype.add = function(testcase) {
 		if(testcase) {
@@ -219,9 +226,6 @@ var unit = {};
 		document.body.innerHTML = str.replace(/#t#/,total).replace(/#s#/,success).replace(/#f#/,(total-success)).replace(/#c#/,content);
 	};
 	
-	if(__render_ && isFunc(__render_)) {
-		render = __render_;
-	}
 	TestSuite.prototype.render = render;
 
 	$.TestSuite = TestSuite;

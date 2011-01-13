@@ -4,15 +4,13 @@
 	</head>
 	<body></body>
 
+	<script type="text/javascript" src="../src/main/unitjs.js"></script>
 	<script type="text/javascript">
-		// this must stay before unitjs.js file import
-		function __render_(errors,total,success) {
+		var render = function(errors,total,success) {
 			var str = "This is overrided result render:#t#/<font size='4' color='green'>#s#</font>/<font size='4' color='red'>#f#</font>";
 			document.body.innerHTML = str.replace(/#t#/,total).replace(/#s#/,success).replace(/#f#/,(total-success));
 		};
-	</script>
-	<script type="text/javascript" src="../src/main/unitjs.js"></script>
-	<script type="text/javascript">
+		unit.TestSuite.init(render);
 		var testcase = unit.TestSuite.create();
 		testcase.testInt = function(){
 			this.assertEqual("fail to test 1 == 1 ",1,1);
