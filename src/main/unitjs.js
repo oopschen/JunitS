@@ -219,8 +219,8 @@ var unit = {};
 		document.body.innerHTML = str.replace(/#t#/,total).replace(/#s#/,success).replace(/#f#/,(total-success)).replace(/#c#/,content);
 	};
 	
-	if(window.renderTest && isFunc(window.renderTest)) {
-		render = window.renderTest;
+	if(__render_ && isFunc(__render_)) {
+		render = __render_;
 	}
 	TestSuite.prototype.render = render;
 
