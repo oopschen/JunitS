@@ -1,7 +1,7 @@
 /**
 * @author raychen.chenl
 **/
-var unit = {};
+var unit = "undefined" !== typeof exports ? exports : {};
 (function($){
 	var STR_EMPTY = "";
 
